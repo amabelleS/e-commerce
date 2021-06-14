@@ -7,7 +7,8 @@ import {
 } from 'react-router-dom';
 
 import HomePage from './pages/homepage/homepage.component';
-import HatsPage from './pages/HatsPage';
+// import HatsPage from './pages/HatsPage';
+import ShopPage from './pages/shop'
 
 import './App.css';
 
@@ -19,8 +20,8 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route path="/hats">
-            <HatsPage />
+          <Route path="/shop">
+            <ShopPage />
           </Route>
         </Switch>
       </div>
