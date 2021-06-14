@@ -7,8 +7,8 @@ import {
 } from 'react-router-dom';
 
 import HomePage from './pages/homepage/homepage.component';
-// import HatsPage from './pages/HatsPage';
 import ShopPage from './pages/shop'
+import Header from './components/header'
 
 import './App.css';
 
@@ -16,6 +16,7 @@ function App() {
   return (
     <Router>
       <div>
+        <Header/>
         <Switch>
           <Route exact path="/">
             <HomePage />
