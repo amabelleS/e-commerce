@@ -11,16 +11,18 @@ import ShopPage from './pages/shop'
 import Header from './components/header'
 import SignInAndSignUpPage from './pages/sign-in-sign-up'
 
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import './App.css';
 
 function App() {
-  const [currentUser, setCurrentYser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const unlisten = auth.onAuthStateChanged(authUser => {
-      authUser ? setCurrentYser(authUser) : setCurrentYser(null);
+    const unlisten = auth.onAuthStateChanged( async authUser => {
+      authUser ? createUserProfileDocument(authUser) : setCurrentUser(null);
+
+      console.log(authUser);
     }) 
     return () => {
       unlisten();
