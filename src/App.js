@@ -1,4 +1,4 @@
-import React from 'react';
+  import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,13 +11,26 @@ import ShopPage from './pages/shop'
 import Header from './components/header'
 import SignInAndSignUpPage from './pages/sign-in-sign-up'
 
+import { auth } from './firebase/firebase.utils';
+
 import './App.css';
 
 function App() {
+  const [currentUser, setCurrentYser] = useState(null);
+
+  useEffect(() => {
+    const unlisten = auth.onAuthStateChanged(authUser => {
+      authUser ? setCurrentYser(authUser) : setCurrentYser(null);
+    }) 
+    return () => {
+      unlisten();
+    }
+  }, [])
+
   return (
     <Router>
       <div>
-        <Header/>
+        <Header currentUser={currentUser}/>
         <Switch>
           <Route exact path="/">
             <HomePage />
