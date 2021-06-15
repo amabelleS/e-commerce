@@ -33,7 +33,7 @@ function App() {
         setCurrentUser(null)
       }
       // console.log(authUser);
-      // console.log(currentUser);
+      console.log(currentUser);
     }) 
     return () => {
       unlisten();
