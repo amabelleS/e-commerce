@@ -20,9 +20,20 @@ function App() {
 
   useEffect(() => {
     const unlisten = auth.onAuthStateChanged( async authUser => {
-      authUser ? createUserProfileDocument(authUser) : setCurrentUser(null);
+      if (authUser) {
+        const userRef = await createUserProfileDocument(authUser)
 
-      console.log(authUser);
+        userRef.onSnapshot(snapshot => {
+          setCurrentUser({
+            id: snapshot.id,
+            ...snapshot.data()
+          })
+        })
+      } else {
+        setCurrentUser(null)
+      }
+      // console.log(authUser);
+      // console.log(currentUser);
     }) 
     return () => {
       unlisten();
