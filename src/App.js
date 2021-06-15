@@ -9,6 +9,7 @@ import {
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop'
 import Header from './components/header'
+import SignInAndSignUpPage from './pages/sign-in-sign-up'
 
 import './App.css';
 
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route path="/shop">
             <ShopPage />
+          </Route>
+          <Route path="/signin">
+            <SignInAndSignUpPage />
           </Route>
         </Switch>
       </div>
