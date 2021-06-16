@@ -6,6 +6,10 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+import { Provider } from 'react-redux';
+
+import store from './redux/store';
+
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop'
 import Header from './components/header'
@@ -41,9 +45,10 @@ function App() {
   }, [])
 
   return (
+    <Provider store={store}>
     <Router>
       <div>
-        <Header currentUser={currentUser}/>
+        <Header />
         <Switch>
           <Route exact path="/">
             <HomePage />
@@ -57,6 +62,7 @@ function App() {
         </Switch>
       </div>
     </Router>
+    </Provider>
   );
 }
 
