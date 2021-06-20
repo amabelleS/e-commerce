@@ -1,51 +1,72 @@
   import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
+  Redirect,
   Route,
   Switch,
-  Redirect,
+  // Redirect,
 } from 'react-router-dom';
-
-import { Provider } from 'react-redux';
-
-import store from './redux/store';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop'
 import Header from './components/header'
 import SignInAndSignUpPage from './pages/sign-in-sign-up'
+import {setCurrentUser} from './redux/user/user.action'
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
+import { connect } from 'react-redux'
+ 
 import './App.css';
 
-function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+function App({currentUser}) {
+  // const [currentUser, setCurrentUser] = useState(null);
+  // const [unsubscribeFromAuth , setUnsubscribeFromAuth ] = useState(null)
+
+  //  const unsubscribeFromAuth = null;
 
   useEffect(() => {
-    const unlisten = auth.onAuthStateChanged( async authUser => {
-      if (authUser) {
-        const userRef = await createUserProfileDocument(authUser)
-
-        userRef.onSnapshot(snapshot => {
+    const unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      const userRef = await createUserProfileDocument(userAuth);
+      if (userRef) {
+        userRef.onSnapshot(snapShot => {
           setCurrentUser({
-            id: snapshot.id,
-            ...snapshot.data()
-          })
-        })
-      } else {
-        setCurrentUser(null)
+            id: snapShot.id,
+            ...snapShot.data()
+          });
+        });
       }
-      // console.log(authUser);
-      // console.log(currentUser);
-    }) 
+      //  else {unsubscribeFromAuth(null)}
+      setCurrentUser(null);
+    });
+    
+    // const unlisten = auth.onAuthStateChanged( async authUser => {
+    //   if (authUser) {
+    //     const userRef = await createUserProfileDocument(authUser)
+
+    //     userRef.onSnapshot(snapshot => {
+    //       setCurrentUser({
+    //         id: snapshot.id,
+    //         ...snapshot.data()
+    //       })
+    //     })
+    //   } else {
+    //     setCurrentUser(null)
+    //   }
+    
+    //   setCurrentUser(authUser)
+    // }) 
     return () => {
-      unlisten();
+      unsubscribeFromAuth();
+      // unlisten()
     }
   }, [])
 
+   useEffect(() => {
+       console.log(currentUser)
+    }, [currentUser])
+
   return (
-    <Provider store={store}>
     <Router>
       <div>
         <Header />
@@ -56,14 +77,23 @@ function App() {
           <Route path="/shop">
             <ShopPage />
           </Route>
-          <Route path="/signin">
-            <SignInAndSignUpPage />
+          <Route exact path="/signin">
+            {currentUser ? <SignInAndSignUpPage /> : <Redirect to='./' /> }
+            {/* <SignInAndSignUpPage /> */}
+            
           </Route>
         </Switch>
       </div>
     </Router>
-    </Provider>
   );
 }
 
-export default App;
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+});
+
+const mapDispachToProps = dispach => ({
+  setCurrentUser: user => dispach(setCurrentUser(user))
+})
+
+export default connect(mapStateToProps, mapDispachToProps)(App);
