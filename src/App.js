@@ -77,6 +77,7 @@ function App({currentUser}) {
           <Route path="/shop">
             <ShopPage />
           </Route>
+          {/* {currentUser ? <Route  exact path="/signin" ><SignInAndSignUpPage /></Route> :  <Redirect to='./' />  } */}
           <Route exact path="/signin">
             {currentUser ? <SignInAndSignUpPage /> : <Redirect to='./' /> }
             {/* <SignInAndSignUpPage /> */}
