@@ -79,8 +79,8 @@ function App({currentUser}) {
           </Route>
           {/* {currentUser ? <Route  exact path="/signin" ><SignInAndSignUpPage /></Route> :  <Redirect to='./' />  } */}
           <Route exact path="/signin">
-            {currentUser ? <SignInAndSignUpPage /> : <Redirect to='./' /> }
-            {/* <SignInAndSignUpPage /> */}
+            {/* {currentUser ? <SignInAndSignUpPage /> : <Redirect to='./' /> } */}
+            <SignInAndSignUpPage />
             
           </Route>
         </Switch>
