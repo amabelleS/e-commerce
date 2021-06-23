@@ -9,7 +9,7 @@ import {
 
 import { createStructuredSelector } from 'reselect';
 
-import HomePage from './pages/homepage/homepage.component';
+import HomePage from './pages/homepage';
 import ShopPage from './pages/shop'
 import Header from './components/header'
 import SignInAndSignUpPage from './pages/sign-in-sign-up'
