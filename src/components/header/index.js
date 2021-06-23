@@ -8,8 +8,8 @@ import { ReactComponent as Logo } from '../../assets/crown.svg';
 import CartIcon from '../cart-icon'
 import CartDropDown from '../cart-dropdown'
 
-import { selectCartHidden } from './redux/cart/cart.selectors';
-import { selectCurrentUser } from './redux/user/user.selectors';
+import { selectCartHidden } from '../../redux/cart/cart.selectors';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 import './header.styles.scss';
 
