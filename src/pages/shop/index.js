@@ -1,15 +1,24 @@
 import React from 'react'
-import { Route } from 'react-router-dom';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import CollectionsOverview from '../../components/collections-overview';
+import CollectionPage from '../collection';
 
-const ShopPage = ({collections}) => (
+const ShopPage = () => {
+  let { path } = useRouteMatch();
+  // let {collectionId} = useParams()
+  // console.log(path);
+  return (
         <div className='shop-page'>
-        <CollectionsOverview />
-           {/* {collections.map(({ id, ...otherCollectionProps }) => (
-            <CollectionPreview key={id} {...otherCollectionProps} />
-        ))} */}
+          <Switch>
+            <Route exact path={`${path}`}>
+              <CollectionsOverview />
+            </Route>
+          <Route path={`${path}/:collectionId`}>
+            <CollectionPage />
+          </Route>
+          </Switch>
       </div>
-    )
+    )}
 
 export default ShopPage
